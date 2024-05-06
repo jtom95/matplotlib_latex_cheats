@@ -32,6 +32,7 @@ def set_axes_ticks_to_small_in_latex(
     instruction="\small",
     distance_units: Literal["m", "cm", "mm", "um", "nm"] = "m",
     which_axis: Literal["x", "y", "both"] = "both",
+    number_of_decimals: int = 1,
 ):
     if isinstance(axes, plt.Axes):
         axes = [axes]
@@ -42,12 +43,12 @@ def set_axes_ticks_to_small_in_latex(
     for ax in axes:
         if which_axis in ["y", "both"]:
             ax.yaxis.set_major_formatter(
-                plt.FuncFormatter(lambda x, _: r"{}{{{:.1f}}}".format(instruction, x * multiplier))
+                plt.FuncFormatter(lambda x, _: r"{}{{{:.{}f}}}".format(instruction, x * multiplier, number_of_decimals))
             )
             ax.yaxis.set_tick_params(labelsize=fontsize)
         if which_axis in ["x", "both"]:
             ax.xaxis.set_major_formatter(
-                plt.FuncFormatter(lambda x, _: r"{}{{{:.1f}}}".format(instruction, x * multiplier))
+                plt.FuncFormatter(lambda x, _: r"{}{{{:.{}f}}}".format(instruction, x * multiplier, number_of_decimals))
             )
             ax.xaxis.set_tick_params(labelsize=fontsize)
 
